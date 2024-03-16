@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/colors/app_color.dart';
 import 'package:social_media_project/pages/auth/login_page.dart';
+import 'package:social_media_project/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -18,6 +21,24 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
   bool isPass = true;
+
+  register() async {
+    try {
+      String response = AuthMethod().signUp(
+        email: emailCon.text,
+        password: passwordCon.text,
+        userName: usernameCon.text,
+        displayName: displayCon.text,
+      );
+      if (response == 'success') {
+      } else {
+        log(response);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +64,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "06",
+                      "02",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const Gap(10),
                     Text(
-                      "16",
+                      "MJS",
                       style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 40,
@@ -61,6 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const Gap(10),
                 TextField(
+                  controller: displayCon,
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
@@ -76,6 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const Gap(20),
                 TextField(
+                  controller: usernameCon,
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
@@ -91,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const Gap(20),
                 TextField(
+                  controller: emailCon,
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
@@ -106,6 +131,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const Gap(20),
                 TextField(
+                  controller: passwordCon,
+                  obscureText: true,
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
@@ -124,7 +151,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          register();
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor,
                             shape: RoundedRectangleBorder(
