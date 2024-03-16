@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/register_page.dart';
-import 'package:social_media_project/pages/auth/signout.dart';
 import 'package:social_media_project/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordCon = TextEditingController();
   bool isPass = true;
 
-  Future<void> signIn() async {
+  signIn() async {
     try {
       String response = await AuthMethod().signIn(
         email: emailCon.text,
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const TestPage(),
+            builder: (context) => const LayoutPage(),
           ),
           (route) => false,
         );

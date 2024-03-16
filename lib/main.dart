@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/login_page.dart';
 import 'firebase_options.dart';
 
@@ -23,7 +25,16 @@ class SocialApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      home: const LoginPage(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const LayoutPage();
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
     );
   }
 }
