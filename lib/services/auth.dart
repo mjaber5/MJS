@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:social_media_project/models/user.dart';
@@ -61,7 +63,7 @@ class AuthMethod {
         response = 'enter all fields';
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
     return response;
   }

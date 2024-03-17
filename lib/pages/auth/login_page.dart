@@ -36,10 +36,10 @@ class _LoginPageState extends State<LoginPage> {
           (route) => false,
         );
       } else {
-        log(response); // Log the response if it's not 'success'
+        log(response);
       }
     } catch (e) {
-      log(e.toString()); // Log any errors that occur during sign-in
+      log(e.toString());
     }
   }
 

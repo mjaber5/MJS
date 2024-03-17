@@ -12,7 +12,7 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body: const Center(
         child: Text('AddPage'),
       ),
     );

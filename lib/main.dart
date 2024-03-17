@@ -28,11 +28,11 @@ class SocialApp extends StatelessWidget {
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.done ||
+              snapshot.hasData) {
             return const LayoutPage();
-          } else {
-            return const LoginPage();
           }
+          return const LoginPage();
         },
       ),
     );
