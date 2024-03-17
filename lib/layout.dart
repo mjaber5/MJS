@@ -33,14 +33,14 @@ class _LayoutPageState extends State<LayoutPage> {
         }),
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: kWhiteColor.withOpacity(0.2),
+        backgroundColor: kWhiteColor.withOpacity(0.1),
         elevation: 0,
         onDestinationSelected: (value) => setState(() {
           currentIndex = value;
           pageController.jumpToPage(value);
         }),
         selectedIndex: currentIndex,
-        indicatorColor: kPrimaryColor.withOpacity(0.2),
+        indicatorColor: kPrimaryColor.withOpacity(0.3),
         destinations: [
           NavigationDestination(
             icon: const Icon(CupertinoIcons.home),

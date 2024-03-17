@@ -22,8 +22,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('ProfilePage'),
+      body: Center(
+        child: Text(
+          'ProfilePage',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ),
     );
   }
