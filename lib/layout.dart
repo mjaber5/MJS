@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:social_media_project/colors/app_color.dart';
 import 'package:social_media_project/pages/add.dart';
 import 'package:social_media_project/pages/home.dart';
@@ -33,44 +35,48 @@ class _LayoutPageState extends State<LayoutPage> {
         }),
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: kWhiteColor.withOpacity(0.1),
+        backgroundColor: Colors.transparent,
         elevation: 0,
         onDestinationSelected: (value) => setState(() {
           currentIndex = value;
           pageController.jumpToPage(value);
         }),
         selectedIndex: currentIndex,
-        indicatorColor: kPrimaryColor.withOpacity(0.3),
+        indicatorColor: Colors.transparent,
         destinations: [
           NavigationDestination(
-            icon: const Icon(CupertinoIcons.home),
-            label: 'Home',
+            icon: const Icon(Iconsax.home),
+            label: '',
             selectedIcon: Icon(
-              CupertinoIcons.home,
+              Iconsax.home,
               color: kPrimaryColor,
             ),
           ),
           NavigationDestination(
-            icon: const Icon(CupertinoIcons.add),
-            label: 'add',
+            icon: const Icon(
+              Ionicons.add,
+              size: 30,
+            ),
+            label: '',
             selectedIcon: Icon(
-              CupertinoIcons.add,
+              Ionicons.add,
+              size: 30,
               color: kPrimaryColor,
             ),
           ),
           NavigationDestination(
-            icon: const Icon(CupertinoIcons.search),
-            label: 'Search',
+            icon: const Icon(Ionicons.search),
+            label: '',
             selectedIcon: Icon(
-              CupertinoIcons.search,
+              Ionicons.search,
               color: kPrimaryColor,
             ),
           ),
           NavigationDestination(
-            icon: const Icon(CupertinoIcons.person),
-            label: 'Profile',
+            icon: const Icon(Ionicons.person_outline),
+            label: '',
             selectedIcon: Icon(
-              CupertinoIcons.person,
+              Ionicons.person,
               color: kPrimaryColor,
             ),
           ),

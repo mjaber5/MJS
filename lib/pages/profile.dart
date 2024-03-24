@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Text(
           'ProfilePage',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

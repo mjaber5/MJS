@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -67,12 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "02",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const Gap(10),
                     Text(
@@ -92,8 +91,12 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(Icons.email_outlined),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       hintText: "Email",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -109,8 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(LineIcons.key),
+                      prefixIcon: Icon(
+                        LineIcons.key,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       hintText: "Password",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -144,7 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Dont have an account? "),
+                    Text(
+                      "Dont have an account? ",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                     const Gap(10),
                     GestureDetector(
                         onTap: () {

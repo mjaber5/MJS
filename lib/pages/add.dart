@@ -10,9 +10,12 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('AddPage'),
+        child: Text(
+          'AddPage',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
     );
   }

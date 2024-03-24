@@ -63,12 +63,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "02",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Gap(10),
                     Text(
@@ -87,8 +84,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(LineIcons.user),
+                      prefixIcon: Icon(
+                        LineIcons.user,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       hintText: "Display Name",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -103,8 +104,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(LineIcons.at),
-                      hintText: "User Name",
+                      prefixIcon: Icon(
+                        LineIcons.at,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      hintText: "User name",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -119,8 +124,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(Icons.email_outlined),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       hintText: "Email",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -136,8 +145,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                       fillColor: kWhiteColor,
                       filled: true,
-                      prefixIcon: const Icon(LineIcons.key),
+                      prefixIcon: Icon(
+                        LineIcons.key,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       hintText: "Password",
+                      hintStyle: Theme.of(context).textTheme.titleSmall,
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(30)),
@@ -161,7 +174,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Text(
                           "Register",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: kWhiteColor),
+                            fontWeight: FontWeight.bold,
+                            color: kWhiteColor,
+                          ),
                         ),
                       ),
                     )
@@ -171,7 +186,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account? "),
+                    Text(
+                      "Already have an account? ",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                     const Gap(10),
                     GestureDetector(
                         onTap: () {
