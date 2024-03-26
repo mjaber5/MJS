@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/colors/app_color.dart';
@@ -56,17 +55,12 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: SvgPicture.asset(
-                    'assets/svg/n_logo.svg',
-                    colorFilter:
-                        ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
-                    height: 150,
-                    width: 150,
+                  child: Image.asset(
+                    'assets/images/newlogo.png',
                   ),
                 ),
-                const Gap(10),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(

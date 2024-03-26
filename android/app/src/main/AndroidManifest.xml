@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="social_media_project"
+        android:label="MJS"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_mjsluncher">
         <activity
             android:name=".MainActivity"
             android:exported="true"

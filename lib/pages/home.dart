@@ -11,11 +11,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(
-          'HomePage',
-          style: Theme.of(context).textTheme.titleLarge,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        title: Image.asset(
+          'assets/images/newlogo.png',
+          height: 185,
+          width: 185,
         ),
+        toolbarHeight: 70,
+      ),
+      body: const Center(
+        child: Text('Hi Evrey one '),
       ),
     );
   }
