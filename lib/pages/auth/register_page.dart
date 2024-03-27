@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
@@ -19,7 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController usernameCon = TextEditingController();
   TextEditingController emailCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
+  bool obscurePassword = true;
   bool isPass = true;
+  IconData iconPassword = CupertinoIcons.eye_fill;
 
   register() async {
     try {
@@ -49,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 Center(
                   child: Image.asset(
-                    'assets/images/newlogo.png',
+                    'assets/images/MjsLogoEn.png',
                   ),
                 ),
                 Row(
@@ -134,23 +137,39 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Gap(20),
                 TextField(
                   controller: passwordCon,
-                  obscureText: true,
+                  obscureText: obscurePassword,
                   decoration: InputDecoration(
-                      fillColor: kWhiteColor,
-                      filled: true,
-                      prefixIcon: Icon(
-                        LineIcons.key,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      hintText: "Password",
-                      hintStyle: Theme.of(context).textTheme.titleSmall,
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(30)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: kPrimaryColor),
-                        borderRadius: BorderRadius.circular(30),
-                      )),
+                    fillColor: kWhiteColor,
+                    filled: true,
+                    prefixIcon: Icon(
+                      LineIcons.key,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    hintText: "Password",
+                    hintStyle: Theme.of(context).textTheme.titleSmall,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    suffixIcon: IconButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                          if (obscurePassword) {
+                            iconPassword = CupertinoIcons.eye_fill;
+                          } else {
+                            iconPassword = CupertinoIcons.eye_slash_fill;
+                          }
+                        });
+                      },
+                      icon: Icon(iconPassword),
+                    ),
+                  ),
                 ),
                 const Gap(20),
                 Row(

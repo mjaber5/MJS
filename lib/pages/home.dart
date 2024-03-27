@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Image.asset(
-          'assets/images/newlogo.png',
+          'assets/images/MjsLogoEn.png',
           height: 185,
           width: 185,
         ),

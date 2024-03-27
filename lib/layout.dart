@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
@@ -35,6 +34,7 @@ class _LayoutPageState extends State<LayoutPage> {
         }),
       ),
       bottomNavigationBar: NavigationBar(
+        height: 50,
         backgroundColor: Colors.transparent,
         elevation: 0,
         onDestinationSelected: (value) => setState(() {
