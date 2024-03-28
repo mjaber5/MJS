@@ -44,6 +44,8 @@ dependencies:
   iconsax: ^0.0.8
   ionicons: ^0.2.2
   google_fonts: ^6.2.1
+  uuid: ^4.3.3
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
