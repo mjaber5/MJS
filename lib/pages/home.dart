@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/widget/post_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,81 +36,23 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
           future: posts.get(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            return ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: kWhiteColor,
-                      ),
-                      child: Column(
-                        children: [
-                          const Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/images/man.png'),
-                              ),
-                              Gap(10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Mohammad"),
-                                  Text("@user"),
-                                ],
-                              ),
-                              Spacer(),
-                              Text("2/7")
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 300,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/MjsLogoEn.png'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "mohammad",
-                                  maxLines: 3,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Iconsax.heart),
-                              ),
-                              const Text("0"),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Iconsax.message),
-                              ),
-                              const Text("0"),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                });
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("Error"),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              dynamic data = snapshot.data!;
+              return ListView.builder(
+                  itemCount: data.docs.length,
+                  itemBuilder: (context, index) {
+                    dynamic item = data.docs[index];
+                    return PostCard(item: item);
+                  });
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }),
     );
   }
