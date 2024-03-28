@@ -27,14 +27,10 @@ class _PostCardState extends State<PostCard> {
           children: [
             Row(
               children: [
-                widget.item['profiePic'] == ""
-                    ? CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/man.png'),
-                      )
-                    : CircleAvatar(
-                        backgroundImage: NetworkImage(widget.item['profiePic']),
-                      ),
-                Gap(10),
+                const CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/man.png'),
+                ),
+                const Gap(10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
