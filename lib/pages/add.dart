@@ -1,3 +1,6 @@
+// ignore_for_file: unused_local_variable
+
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -27,7 +30,9 @@ class _AddPageState extends State<AddPage> {
         file: file!,
         username: "moham",
       );
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   @override

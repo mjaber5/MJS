@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/login_page.dart';
 import 'package:social_media_project/services/auth.dart';
 
@@ -33,6 +34,12 @@ class _RegisterPageState extends State<RegisterPage> {
         displayName: displayCon.text,
       );
       if (response == 'success') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LayoutPage(),
+          ),
+        );
       } else {
         log(response);
       }

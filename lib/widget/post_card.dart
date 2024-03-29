@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: prefer_interpolation_to_compose_strings, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
@@ -85,12 +86,16 @@ class _PostCardState extends State<PostCard> {
                   icon: const Icon(Iconsax.message),
                 ),
                 const Text("0"),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Iconsax.trash),
+                ),
               ],
             )
           ],
         ),
       ),
     );
-    ;
   }
 }

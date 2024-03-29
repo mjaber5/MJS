@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:gap/gap.dart';
+
 import 'package:iconsax/iconsax.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/pages/chat.dart';
+
 import 'package:social_media_project/widget/post_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +20,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Iconsax.message))
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChatPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Iconsax.message))
         ],
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -33,26 +40,26 @@ class _HomePageState extends State<HomePage> {
         ),
         toolbarHeight: 70,
       ),
-      body: FutureBuilder(
-          future: posts.get(),
+      body: StreamBuilder(
+          stream: posts.orderBy('date', descending: true).snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text("Error"),
               );
             }
-            if (snapshot.connectionState == ConnectionState.done) {
-              dynamic data = snapshot.data!;
-              return ListView.builder(
-                  itemCount: data.docs.length,
-                  itemBuilder: (context, index) {
-                    dynamic item = data.docs[index];
-                    return PostCard(item: item);
-                  });
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  dynamic data = snapshot.data!;
+                  dynamic item = data.docs[index];
+                  return PostCard(item: item);
+                });
           }),
     );
   }

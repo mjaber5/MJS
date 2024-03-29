@@ -1,7 +1,7 @@
-import 'dart:html';
-import 'dart:typed_data';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:social_media_project/models/post.dart';
 import 'package:social_media_project/services/storage.dart';
 import 'package:uuid/uuid.dart';
@@ -19,7 +19,7 @@ class CloudMethods {
   }) async {
     String res = "Some Error";
     try {
-      String postId = Uuid().v1();
+      String postId = const Uuid().v1();
       String postImage = await StorageMethods().uploadImageToStorage(file);
       PostModel postModel = PostModel(
         userId: uid,
@@ -35,7 +35,7 @@ class CloudMethods {
       posts.doc(postId).set(postModel.toJson());
       res = "Sucssess";
     } catch (e) {
-      res = e.toString();
+      log(e.toString());
     }
     return res;
   }

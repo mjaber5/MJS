@@ -34,8 +34,8 @@ class _LayoutPageState extends State<LayoutPage> {
         }),
       ),
       bottomNavigationBar: NavigationBar(
-        height: 50,
-        backgroundColor: Colors.transparent.withOpacity(0.7),
+        height: 70,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
         onDestinationSelected: (value) => setState(() {
           currentIndex = value;
