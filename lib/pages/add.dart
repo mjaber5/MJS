@@ -1,12 +1,15 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:developer';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/models/user.dart';
+import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
 import 'package:social_media_project/utils/picker.dart';
 
@@ -22,13 +25,15 @@ class _AddPageState extends State<AddPage> {
   TextEditingController desCon = TextEditingController();
 
   uploadPost() async {
+    UserModel userModel =
+        Provider.of<UserProvider>(context, listen: false).userModel!;
     try {
       String res = await CloudMethods().uploadPost(
         description: desCon.text,
-        uid: "ouBTs5MKWZNAWmxY8s46380duQs1",
-        displayname: "moham",
+        uid: userModel.userId,
+        displayname: userModel.displayName,
         file: file!,
-        username: "moham",
+        username: userModel.userName,
       );
     } catch (e) {
       log(e.toString());
@@ -52,60 +57,64 @@ class _AddPageState extends State<AddPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
+        child: _addPost(),
+      ),
+    );
+  }
+
+  Widget _addPost() {
+    return Column(
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/man.png'),
-                ),
-                const Gap(30),
-                Expanded(
-                  child: TextField(
-                    controller: desCon,
-                    maxLines: 5,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Type here.....",
-                    ),
-                  ),
-                ),
-              ],
+            const CircleAvatar(
+              backgroundImage: AssetImage('assets/images/man.png'),
             ),
+            const Gap(30),
             Expanded(
-              child: file == null
-                  ? Container()
-                  : Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: MemoryImage(file!),
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-            ),
-            const Gap(40),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  backgroundColor: kSecondaryColor,
-                  padding: const EdgeInsets.all(20)),
-              onPressed: () async {
-                Uint8List myFile = await pickImage();
-                setState(() {
-                  file = myFile;
-                });
-                // pickImage();
-              },
-              child: Icon(
-                Ionicons.camera_outline,
-                color: kWhiteColor,
+              child: TextField(
+                controller: desCon,
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Type here.....",
+                ),
               ),
             ),
-            const Gap(80),
           ],
         ),
-      ),
+        Expanded(
+          child: file == null
+              ? Container()
+              : Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: MemoryImage(file!),
+                        fit: BoxFit.fill,
+                      )),
+                ),
+        ),
+        const Gap(40),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: kSecondaryColor,
+              padding: const EdgeInsets.all(20)),
+          onPressed: () async {
+            Uint8List myFile = await pickImage();
+            setState(() {
+              file = myFile;
+            });
+            // pickImage();
+          },
+          child: Icon(
+            Ionicons.camera_outline,
+            color: kWhiteColor,
+          ),
+        ),
+        const Gap(80),
+      ],
     );
   }
 }

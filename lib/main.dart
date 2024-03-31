@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_project/colors/app_color.dart';
 import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/login_page.dart';
+import 'package:social_media_project/provider/user_provider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -35,62 +37,65 @@ class SocialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData().copyWith(
-        colorScheme: colorScheme,
-        scaffoldBackgroundColor: colorScheme.background,
-        textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
-          titleSmall: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 61, 61, 61),
+    return ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData().copyWith(
+          colorScheme: colorScheme,
+          scaffoldBackgroundColor: colorScheme.background,
+          textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
+            titleSmall: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 61, 61, 61),
+            ),
+            titleMedium: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 61, 61, 61),
+            ),
+            titleLarge: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 61, 61, 61),
+            ),
           ),
-          titleMedium: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 61, 61, 61),
-          ),
-          titleLarge: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 61, 61, 61),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: colorScheme.primary,
-          ),
-        ),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        colorScheme: darkColorScheme,
-        scaffoldBackgroundColor: darkColorScheme.background,
-        textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
-          titleSmall: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 144, 144, 144),
-          ),
-          titleMedium: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 144, 144, 144),
-          ),
-          titleLarge: GoogleFonts.ubuntuCondensed(
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 144, 144, 144),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+            ),
           ),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: darkColorScheme.onPrimary),
+        darkTheme: ThemeData.dark().copyWith(
+          colorScheme: darkColorScheme,
+          scaffoldBackgroundColor: darkColorScheme.background,
+          textTheme: GoogleFonts.ubuntuCondensedTextTheme().copyWith(
+            titleSmall: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 144, 144, 144),
+            ),
+            titleMedium: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 144, 144, 144),
+            ),
+            titleLarge: GoogleFonts.ubuntuCondensed(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 144, 144, 144),
+            ),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: darkColorScheme.onPrimary),
+          ),
         ),
-      ),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done ||
-              snapshot.hasData) {
-            return const LayoutPage();
-          }
-          return const LoginPage();
-        },
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done ||
+                snapshot.hasData) {
+              return const LayoutPage();
+            }
+            return const LoginPage();
+          },
+        ),
       ),
     );
   }

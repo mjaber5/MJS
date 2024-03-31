@@ -9,6 +9,14 @@ import 'package:social_media_project/models/user.dart';
 class AuthMethod {
   FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+    DocumentSnapshot documentSnapshot = await users.doc(currentUser.uid).get();
+
+    return UserModel.fromSnap(documentSnapshot);
+  }
+
   signUp({
     required String email,
     required String password,
