@@ -1,0 +1,42 @@
+// ignore_for_file: camel_case_types
+
+import 'package:flutter/material.dart';
+
+class editProfileTextField extends StatelessWidget {
+  const editProfileTextField({
+    super.key,
+    required this.context,
+    required this.labelText,
+    required this.prefixIcon,
+  });
+
+  final BuildContext context;
+  final String labelText;
+  final Icon prefixIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      style: Theme.of(context).textTheme.titleMedium,
+      decoration: InputDecoration(
+        fillColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+        labelText: labelText,
+        labelStyle: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+        filled: true,
+        prefixIcon: prefixIcon,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    );
+  }
+}

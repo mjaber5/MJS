@@ -22,14 +22,14 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   Uint8List? file;
-  TextEditingController desCon = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   uploadPost() async {
     UserModel userModel =
         Provider.of<UserProvider>(context, listen: false).userModel!;
     try {
       String res = await CloudMethods().uploadPost(
-        description: desCon.text,
+        description: descriptionController.text,
         uid: userModel.userId,
         displayname: userModel.displayName,
         file: file!,
@@ -44,7 +44,8 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
         title: const Text("Add Post"),
         actions: [
           TextButton(
@@ -65,6 +66,7 @@ class _AddPageState extends State<AddPage> {
   Widget _addPost() {
     return Column(
       children: [
+        const Gap(15),
         Row(
           children: [
             const CircleAvatar(
@@ -72,27 +74,22 @@ class _AddPageState extends State<AddPage> {
             ),
             const Gap(30),
             Expanded(
-              child: TextField(
-                controller: desCon,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Type here.....",
-                ),
-              ),
+              child: textFieldPost(),
             ),
           ],
         ),
+        const Gap(20),
         Expanded(
           child: file == null
               ? Container()
               : Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: MemoryImage(file!),
-                        fit: BoxFit.fill,
-                      )),
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                      image: MemoryImage(file!),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
         ),
         const Gap(40),
@@ -102,11 +99,10 @@ class _AddPageState extends State<AddPage> {
               backgroundColor: kSecondaryColor,
               padding: const EdgeInsets.all(20)),
           onPressed: () async {
-            Uint8List myFile = await pickImage();
+            Uint8List myFile = await takePhoto();
             setState(() {
               file = myFile;
             });
-            // pickImage();
           },
           child: Icon(
             Ionicons.camera_outline,
@@ -115,6 +111,48 @@ class _AddPageState extends State<AddPage> {
         ),
         const Gap(80),
       ],
+    );
+  }
+
+  TextField textFieldPost() {
+    return TextField(
+      style: Theme.of(context).textTheme.titleMedium,
+      controller: descriptionController,
+      decoration: InputDecoration(
+        fillColor: Theme.of(context).colorScheme.background,
+        labelText: 'description',
+        labelStyle: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+        filled: true,
+        prefixIcon: Icon(
+          Ionicons.pencil,
+          size: 22,
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+        suffixIcon: IconButton(
+          onPressed: () async {
+            Uint8List myFile = await pickImage();
+            setState(() {
+              file = myFile;
+            });
+          },
+          icon: Icon(
+            Icons.attach_file,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
     );
   }
 }

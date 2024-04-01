@@ -9,3 +9,13 @@ pickImage() async {
     return await file.readAsBytes();
   }
 }
+
+takePhoto() async {
+  ImagePicker imagePicker = ImagePicker();
+
+  XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+
+  if (file != null) {
+    return await file.readAsBytes();
+  }
+}

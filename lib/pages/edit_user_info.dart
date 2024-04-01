@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/widget/profilewidgets/edit_porfile_information/edit_info_text_field.dart';
 
 class EditUserPage extends StatefulWidget {
   const EditUserPage({super.key});
@@ -19,7 +20,7 @@ class _EditUserPageState extends State<EditUserPage> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Edit Info',
+          'Profile Details',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         leading: IconButton(
@@ -65,89 +66,29 @@ class _EditUserPageState extends State<EditUserPage> {
                 ),
               ),
               const Gap(50),
-              TextField(
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.1),
-                  labelText: 'Display Name',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  filled: true,
+              editProfileTextField(
+                  context: context,
+                  labelText: 'Display name',
                   prefixIcon: Icon(
                     Ionicons.person_outline,
                     color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
+                  )),
               const Gap(20),
-              TextField(
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.1),
+              editProfileTextField(
+                  context: context,
                   labelText: 'Username',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  filled: true,
                   prefixIcon: Icon(
                     Ionicons.at,
                     color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
+                  )),
               const Gap(20),
-              TextField(
-                decoration: InputDecoration(
-                  fillColor: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.1),
+              editProfileTextField(
+                  context: context,
                   labelText: 'Bio',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  filled: true,
                   prefixIcon: Icon(
                     Ionicons.information_circle_outline,
                     color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
+                  )),
               const Gap(30),
               Row(
                 children: [
