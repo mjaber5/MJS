@@ -25,7 +25,9 @@ class _SearchPageState extends State<SearchPage> {
             ),
             _searchBarWidget(context),
             Expanded(
-              child: FutureBuilderSearch(searchController: searchController),
+              child: FutureBuilderSearch(
+                searchController: searchController,
+              ),
             ),
           ],
         ),

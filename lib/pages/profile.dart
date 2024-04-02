@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/pages/edit_user_info.dart';
 import 'package:social_media_project/provider/user_provider.dart';
+import 'package:social_media_project/widget/profilewidgets/build_screen_to_show_image.dart';
 import 'package:social_media_project/widget/profilewidgets/followers.dart';
 import 'package:social_media_project/widget/profilewidgets/following.dart';
 import 'package:social_media_project/widget/post_card.dart';
@@ -207,13 +208,27 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             itemBuilder: (context, index) {
               dynamic item = snapshot.data.docs[index];
-              return Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(item['postImage']),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BuildImageDetailPage(
+                          context: context, imageUrl: item['postImage']),
+                    ),
+                  );
+                },
+                child: Hero(
+                  tag: 'image${item.id}',
+                  child: Container(
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(item['postImage']),
+                      ),
+                    ),
                   ),
                 ),
               );

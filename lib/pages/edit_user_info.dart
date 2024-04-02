@@ -67,28 +67,31 @@ class _EditUserPageState extends State<EditUserPage> {
               ),
               const Gap(50),
               editProfileTextField(
-                  context: context,
-                  labelText: 'Display name',
-                  prefixIcon: Icon(
-                    Ionicons.person_outline,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  )),
+                context: context,
+                labelText: 'Display name',
+                prefixIcon: Icon(
+                  Ionicons.person_outline,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
               const Gap(20),
               editProfileTextField(
-                  context: context,
-                  labelText: 'Username',
-                  prefixIcon: Icon(
-                    Ionicons.at,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  )),
+                context: context,
+                labelText: 'Username',
+                prefixIcon: Icon(
+                  Ionicons.at,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
               const Gap(20),
               editProfileTextField(
-                  context: context,
-                  labelText: 'Bio',
-                  prefixIcon: Icon(
-                    Ionicons.information_circle_outline,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  )),
+                context: context,
+                labelText: 'Bio',
+                prefixIcon: Icon(
+                  Ionicons.information_circle_outline,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
               const Gap(30),
               Row(
                 children: [

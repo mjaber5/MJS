@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
   final item;
@@ -16,13 +16,16 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
+    String formattedDate =
+        DateFormat('HH').format(widget.item['date'].toDate());
+
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: kWhiteColor,
+          color: Colors.transparent,
         ),
         child: Column(
           children: [
@@ -35,12 +38,21 @@ class _PostCardState extends State<PostCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.item['displayName']),
-                    Text("@" + widget.item['userName']),
+                    Text(
+                      widget.item['displayName'],
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      "@" + widget.item['userName'],
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ],
                 ),
                 const Spacer(),
-                Text(widget.item['date'].toDate().toString()),
+                Text(
+                  '$formattedDate\th',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ],
             ),
             Row(
@@ -69,9 +81,12 @@ class _PostCardState extends State<PostCard> {
                 Expanded(
                   child: Text(
                     widget.item['description'],
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 3,
                   ),
                 ),
+                const Gap(10),
               ],
             ),
             Row(
@@ -80,12 +95,18 @@ class _PostCardState extends State<PostCard> {
                   onPressed: () {},
                   icon: const Icon(Iconsax.heart),
                 ),
-                const Text("0"),
+                Text(
+                  "0",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Iconsax.message),
                 ),
-                const Text("0"),
+                Text(
+                  "0",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const Spacer(),
                 IconButton(
                   onPressed: () {},
