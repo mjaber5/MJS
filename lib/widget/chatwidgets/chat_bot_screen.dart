@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/components/colors/app_color.dart';
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});

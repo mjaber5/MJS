@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/widget/chatwidgets/chat_bot_screen.dart';
 
 class ChatPage extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/components/constant/string.dart';
 import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/login_page.dart';
 import 'package:social_media_project/services/auth.dart';
@@ -23,8 +23,12 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordCon = TextEditingController();
   bool obscurePassword = true;
   bool isPass = true;
-  IconData iconPassword = CupertinoIcons.eye_fill;
-
+  String showPassword = 'show';
+  bool containsUpperCase = false;
+  bool containsLowerCase = false;
+  bool containsNumber = false;
+  bool containsSpecialChar = false;
+  bool contains8Length = false;
   register() async {
     try {
       String response = AuthMethod().signUp(
@@ -142,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       )),
                 ),
                 const Gap(20),
-                TextField(
+                TextFormField(
                   controller: passwordCon,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
@@ -162,21 +166,130 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderSide: BorderSide(color: kPrimaryColor),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    suffixIcon: IconButton(
-                      color: Theme.of(context).colorScheme.primary,
+                    suffixIcon: TextButton(
+                      child: Text(
+                        showPassword,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                       onPressed: () {
                         setState(() {
                           obscurePassword = !obscurePassword;
                           if (obscurePassword) {
-                            iconPassword = CupertinoIcons.eye_fill;
+                            showPassword = 'show';
                           } else {
-                            iconPassword = CupertinoIcons.eye_slash_fill;
+                            showPassword = 'hide';
                           }
                         });
                       },
-                      icon: Icon(iconPassword),
                     ),
                   ),
+                  onChanged: (val) {
+                    if (val.contains(RegExp(r'[A-Z]'))) {
+                      setState(() {
+                        containsUpperCase = true;
+                      });
+                    } else {
+                      setState(() {
+                        containsUpperCase = false;
+                      });
+                    }
+                    if (val.contains(RegExp(r'[a-z]'))) {
+                      setState(() {
+                        containsLowerCase = true;
+                      });
+                    } else {
+                      setState(() {
+                        containsLowerCase = false;
+                      });
+                    }
+                    if (val.contains(RegExp(r'[0-9]'))) {
+                      setState(() {
+                        containsNumber = true;
+                      });
+                    } else {
+                      setState(() {
+                        containsNumber = false;
+                      });
+                    }
+                    if (val.contains(specialCharRexExp)) {
+                      setState(() {
+                        containsSpecialChar = true;
+                      });
+                    } else {
+                      setState(() {
+                        containsSpecialChar = false;
+                      });
+                    }
+                    if (val.length >= 8) {
+                      setState(() {
+                        contains8Length = true;
+                      });
+                    } else {
+                      setState(() {
+                        contains8Length = false;
+                      });
+                    }
+                  },
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return 'Please fill in this field';
+                    } else if (!passwordRexExp.hasMatch(val)) {
+                      return 'Please enter a valid password';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "⚈  1 uppercase",
+                          style: TextStyle(
+                              color: containsUpperCase
+                                  ? kSecondaryColor
+                                  : Theme.of(context).colorScheme.onBackground),
+                        ),
+                        Text(
+                          "⚈  1 lowercase",
+                          style: TextStyle(
+                              color: containsLowerCase
+                                  ? kSecondaryColor
+                                  : Theme.of(context).colorScheme.onBackground),
+                        ),
+                        Text(
+                          "⚈  1 number",
+                          style: TextStyle(
+                              color: containsNumber
+                                  ? kSecondaryColor
+                                  : Theme.of(context).colorScheme.onBackground),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "⚈  1 special character",
+                          style: TextStyle(
+                              color: containsSpecialChar
+                                  ? kSecondaryColor
+                                  : Theme.of(context).colorScheme.onBackground),
+                        ),
+                        Text(
+                          "⚈  8 minimum character",
+                          style: TextStyle(
+                              color: contains8Length
+                                  ? kSecondaryColor
+                                  : Theme.of(context).colorScheme.onBackground),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 const Gap(20),
                 Row(
@@ -211,21 +324,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const Gap(10),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
-                              (route) => false);
-                        },
-                        child: Text(
-                          "Login now",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
-                        ))
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (route) => false);
+                      },
+                      child: Text(
+                        "Login now",
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),

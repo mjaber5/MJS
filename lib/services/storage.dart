@@ -9,10 +9,13 @@ class StorageMethods {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  uploadImageToStorage(Uint8List file) async {
+  uploadImageToStorage(Uint8List file, String childName, bool isPost) async {
     String id = const Uuid().v1();
     Reference ref =
-        _storage.ref().child('posts').child(_auth.currentUser!.uid).child(id);
+        _storage.ref().child(childName).child(_auth.currentUser!.uid);
+    if (isPost) {
+      ref.child(id);
+    }
 
     UploadTask uploadTask = ref.putData(file);
 

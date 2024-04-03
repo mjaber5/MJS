@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:social_media_project/models/user.dart';
+import 'package:social_media_project/provider/user_provider.dart';
 
 class PostCard extends StatefulWidget {
   final item;
@@ -16,8 +19,13 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
+    UserModel? userModel = Provider.of<UserProvider>(context).userModel;
+    if (userModel == null) {
+      return const SizedBox.shrink();
+    }
+
     String formattedDate =
-        DateFormat('HH').format(widget.item['date'].toDate());
+        DateFormat('HH:MM').format(widget.item['date'].toDate());
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -31,19 +39,23 @@ class _PostCardState extends State<PostCard> {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/man.png'),
-                ),
+                userModel.profilePicture == ''
+                    ? const CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/man.png'),
+                      )
+                    : CircleAvatar(
+                        backgroundImage: NetworkImage(userModel.profilePicture),
+                      ),
                 const Gap(10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.item['displayName'],
+                      userModel.displayName,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
-                      "@" + widget.item['userName'],
+                      "@${userModel.userName}",
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
@@ -82,7 +94,7 @@ class _PostCardState extends State<PostCard> {
                   child: Text(
                     widget.item['description'],
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleMedium,
                     maxLines: 3,
                   ),
                 ),

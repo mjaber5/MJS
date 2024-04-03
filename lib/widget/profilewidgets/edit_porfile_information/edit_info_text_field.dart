@@ -8,15 +8,18 @@ class editProfileTextField extends StatelessWidget {
     required this.context,
     required this.labelText,
     required this.prefixIcon,
+    required this.controller,
   });
 
   final BuildContext context;
   final String labelText;
   final Icon prefixIcon;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       style: Theme.of(context).textTheme.titleMedium,
       decoration: InputDecoration(
         fillColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),

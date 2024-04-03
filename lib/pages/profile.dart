@@ -64,9 +64,9 @@ class _ProfilePageState extends State<ProfilePage>
             children: [
               Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/images/man.png'),
+                    backgroundImage: NetworkImage(userModel.profilePicture),
                   ),
                   const Spacer(),
                   ContainerFollowers(context: context),
@@ -208,30 +208,38 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             itemBuilder: (context, index) {
               dynamic item = snapshot.data.docs[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BuildImageDetailPage(
-                          context: context, imageUrl: item['postImage']),
-                    ),
-                  );
-                },
-                child: Hero(
-                  tag: 'image${item.id}',
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(item['postImage']),
+              String imageUrl = item['postImage'];
+              if (imageUrl.isNotEmpty) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BuildImageDetailPage(
+                          context: context,
+                          imageUrl: imageUrl,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Hero(
+                    tag: 'image${item.id}',
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(imageUrl),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
+                );
+              } else {
+                // Handle case when imageUrl is empty or null
+                return const SizedBox(); // Placeholder or empty container
+              }
             },
           );
         }

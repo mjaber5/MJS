@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 
 class CloudMethods {
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
+  CollectionReference users = FirebaseFirestore.instance.collection("users");
 
   uploadPost({
     required String description,
@@ -17,10 +18,11 @@ class CloudMethods {
     String? profilePic,
     required String username,
   }) async {
-    String res = "Some Error";
+    String response = "Some Error";
     try {
       String postId = const Uuid().v1();
-      String postImage = await StorageMethods().uploadImageToStorage(file);
+      String postImage =
+          await StorageMethods().uploadImageToStorage(file, 'posts', true);
       PostModel postModel = PostModel(
         userId: uid,
         profilePic: profilePic ?? "",
@@ -33,10 +35,38 @@ class CloudMethods {
         like: [],
       );
       posts.doc(postId).set(postModel.toJson());
-      res = "Sucssess";
+      response = "success";
     } catch (e) {
       log(e.toString());
     }
-    return res;
+    return response;
+  }
+
+  editProfileData({
+    required String userId,
+    required String displayName,
+    required String userName,
+    Uint8List? file,
+    String bio = '',
+    String profilePicture = '',
+  }) async {
+    String response = "some error";
+    try {
+      profilePicture = file != null
+          ? await StorageMethods().uploadImageToStorage(file, 'users', false)
+          : '';
+      if (displayName != '' && userName != '') {
+        await users.doc(userId).update({
+          'displayName': displayName,
+          'userName': userName,
+          'bio': bio,
+          'profilePicture': profilePicture,
+        });
+        response = "success";
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return response;
   }
 }

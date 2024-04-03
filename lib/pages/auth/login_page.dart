@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:social_media_project/colors/app_color.dart';
+import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/register_page.dart';
 import 'package:social_media_project/services/auth.dart';
@@ -22,8 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
   bool isPass = true;
-  IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
+  String showPassword = 'Show';
 
   signIn() async {
     try {
@@ -123,19 +123,21 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: kPrimaryColor),
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    suffixIcon: IconButton(
-                      color: Theme.of(context).colorScheme.primary,
+                    suffixIcon: TextButton(
+                      child: Text(
+                        showPassword,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                       onPressed: () {
                         setState(() {
                           obscurePassword = !obscurePassword;
                           if (obscurePassword) {
-                            iconPassword = CupertinoIcons.eye_fill;
+                            showPassword = 'show';
                           } else {
-                            iconPassword = CupertinoIcons.eye_slash_fill;
+                            showPassword = 'hide';
                           }
                         });
                       },
-                      icon: Icon(iconPassword),
                     ),
                   ),
                 ),
