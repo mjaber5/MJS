@@ -33,20 +33,28 @@ class _ChatPageState extends State<ChatPage> {
         future: FirebaseFirestore.instance.collection('users').get(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+                child: Text(
+              'Error: ${snapshot.error}',
+            ));
           } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 dynamic item = snapshot.data!.docs[index];
                 return ListTile(
-                  leading: item['profilePicture'].isEmpty
-                      ? const CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/man.png'),
+                  leading: item['profilePicture'] != null &&
+                          item['profilePicture'].isNotEmpty
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(item['profilePicture']),
                         )
-                      : const CircleAvatar(),
+                      : const CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/man.png'),
+                        ),
                   title: Text(item['displayName']),
                   subtitle: Text('@ ${item['userName']}'),
                 );

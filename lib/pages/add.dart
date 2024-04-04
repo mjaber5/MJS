@@ -22,6 +22,7 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   Uint8List? file;
+
   TextEditingController descriptionController = TextEditingController();
 
   uploadPost() async {
@@ -30,8 +31,8 @@ class _AddPageState extends State<AddPage> {
     try {
       String res = await CloudMethods().uploadPost(
         description: descriptionController.text,
-        uid: userModel.userId,
-        displayname: userModel.displayName,
+        userId: userModel.userId,
+        displayName: userModel.displayName,
         file: file!,
         username: userModel.userName,
       );
@@ -64,13 +65,19 @@ class _AddPageState extends State<AddPage> {
   }
 
   Widget _addPost() {
+    UserModel userModel =
+        Provider.of<UserProvider>(context, listen: false).userModel!;
     return Column(
       children: [
         const Gap(15),
         Row(
           children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/man.png'),
+            CircleAvatar(
+              backgroundImage: userModel.profilePicture == ''
+                  ? const AssetImage('assets/images/man.png')
+                      as ImageProvider<Object>
+                  : NetworkImage(userModel.profilePicture)
+                      as ImageProvider<Object>,
             ),
             const Gap(30),
             Expanded(

@@ -34,6 +34,7 @@ class ContainerFollowing extends StatelessWidget {
                 '0',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
+              const Gap(5),
               Text(
                 'Following',
                 style: Theme.of(context).textTheme.titleSmall,

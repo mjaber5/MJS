@@ -10,10 +10,10 @@ class CloudMethods {
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   CollectionReference users = FirebaseFirestore.instance.collection("users");
 
-  uploadPost({
+  Future<String> uploadPost({
     required String description,
-    required String uid,
-    required String displayname,
+    required String userId,
+    required String displayName,
     required Uint8List file,
     String? profilePic,
     required String username,
@@ -24,9 +24,9 @@ class CloudMethods {
       String postImage =
           await StorageMethods().uploadImageToStorage(file, 'posts', true);
       PostModel postModel = PostModel(
-        userId: uid,
+        userId: userId,
         profilePic: profilePic ?? "",
-        displayName: displayname,
+        displayName: displayName,
         userName: username,
         description: description,
         postId: postId,
@@ -36,6 +36,59 @@ class CloudMethods {
       );
       posts.doc(postId).set(postModel.toJson());
       response = "success";
+    } catch (e) {
+      log(e.toString());
+    }
+    return response;
+  }
+
+  likePost(
+    String postId,
+    String userId,
+    List likePost,
+  ) async {
+    String response = 'Some Error';
+    try {
+      if (likePost.contains(userId)) {
+        posts.doc(postId).update({
+          'like': FieldValue.arrayRemove([userId]),
+        });
+      } else {
+        posts.doc(postId).update({
+          'like': FieldValue.arrayUnion([userId]),
+        });
+      }
+      response = 'success';
+    } catch (e) {
+      log(e.toString());
+    }
+    return response;
+  }
+
+  commentToPost({
+    required String postId,
+    required String userId,
+    required String commentText,
+    required String profilePicture,
+    required String displayName,
+    required String userName,
+  }) async {
+    String response = "Some Error";
+    try {
+      if (commentText.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        posts.doc(postId).collection('comments').doc(commentId).set({
+          'userId': userId,
+          'postId': postId,
+          'commentId': commentId,
+          'commentText': commentText,
+          'profilePicture': profilePicture,
+          'displayName': displayName,
+          'userName': userName,
+          'date': DateTime.now(),
+        });
+        response = "success";
+      }
     } catch (e) {
       log(e.toString());
     }

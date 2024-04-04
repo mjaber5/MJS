@@ -237,8 +237,7 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
                 );
               } else {
-                // Handle case when imageUrl is empty or null
-                return const SizedBox(); // Placeholder or empty container
+                return const SizedBox();
               }
             },
           );

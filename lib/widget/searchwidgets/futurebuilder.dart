@@ -30,7 +30,9 @@ class FutureBuilderSearch extends StatelessWidget {
                     ? const CircleAvatar(
                         backgroundImage: AssetImage('assets/images/man.png'),
                       )
-                    : const CircleAvatar(),
+                    : CircleAvatar(
+                        backgroundImage: NetworkImage(item['profilePicture']),
+                      ),
                 title: Text(item['displayName']),
                 subtitle: Text(
                   '@ ${item['userName']}',
