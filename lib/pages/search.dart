@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:social_media_project/widget/searchwidgets/futurebuilder.dart';
 
@@ -24,11 +26,30 @@ class _SearchPageState extends State<SearchPage> {
               height: 30,
             ),
             _searchBarWidget(context),
-            Expanded(
-              child: FutureBuilderSearch(
-                searchController: searchController,
-              ),
-            ),
+            searchController.text.isEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 200),
+                      Center(
+                        child: SvgPicture.asset(
+                          'assets/svg/undraw_posting_photo_re_plk8.svg',
+                          height: 100,
+                          width: 100,
+                        ),
+                      ),
+                      const Gap(20),
+                      Text(
+                        'Search for your frindes ...',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ],
+                  )
+                : Expanded(
+                    child: FutureBuilderSearch(
+                      searchController: searchController,
+                    ),
+                  ),
           ],
         ),
       ),

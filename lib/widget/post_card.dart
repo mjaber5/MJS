@@ -25,9 +25,11 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   int commentCount = 0;
   late Stream<DocumentSnapshot<Map<String, dynamic>>> _authorStream;
+  bool isLoad = true;
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getAuthorStream(
       String userId) {
+    isLoad = false;
     return FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -45,6 +47,7 @@ class _PostCardState extends State<PostCard> {
         setState(() {
           commentCount = comment.docs.length;
         });
+        isLoad = false;
       }
     } catch (e) {
       log(e.toString());
@@ -65,153 +68,166 @@ class _PostCardState extends State<PostCard> {
     String formattedDate =
         DateFormat('HH:MM').format(widget.item['date'].toDate());
 
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.transparent,
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Gap(10),
-                StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  stream: _authorStream,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError || !snapshot.hasData) {
-                      return const Text('Unknown Author');
-                    } else {
-                      Map<String, dynamic> authorInfo = snapshot.data!.data()!;
-                      String authorProfilePic =
-                          authorInfo['profilePicture'] ?? '';
-                      String authorDisplayName =
-                          authorInfo['displayName'] ?? 'Unknown Author';
+    return isLoad
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Padding(
+            padding: const EdgeInsets.all(8),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.transparent,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const Gap(10),
+                      StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: _authorStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError || !snapshot.hasData) {
+                            return const Text('Unknown Author');
+                          } else {
+                            Map<String, dynamic> authorInfo =
+                                snapshot.data!.data()!;
+                            String authorProfilePic =
+                                authorInfo['profilePicture'] ?? '';
+                            String authorDisplayName =
+                                authorInfo['displayName'] ?? 'Unknown Author';
 
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: authorProfilePic.isEmpty
-                                ? const AssetImage('assets/images/man.png')
-                                : NetworkImage(authorProfilePic)
-                                    as ImageProvider<Object>,
-                          ),
-                          const SizedBox(width: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                authorDisplayName,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                '@${authorInfo['userName']}',
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ],
-                          )
-                        ],
-                      );
-                    }
-                  },
-                ),
-                const Spacer(),
-                Text(
-                  '$formattedDate\th',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: widget.item['postImage'] != " "
-                      ? Container(
-                          margin: const EdgeInsets.all(12),
-                          height: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                widget.item['postImage'],
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.item['description'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLines: 3,
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: authorProfilePic.isEmpty
+                                      ? const AssetImage(
+                                          'assets/images/man.png')
+                                      : NetworkImage(authorProfilePic)
+                                          as ImageProvider<Object>,
+                                ),
+                                const SizedBox(width: 15),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      authorDisplayName,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    Text(
+                                      '@${authorInfo['userName']}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          }
+                        },
+                      ),
+                      const Spacer(),
+                      Text(
+                        '$formattedDate\th',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
                   ),
-                ),
-                const Gap(10),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      CloudMethods().likePost(
-                        widget.item['postId'],
-                        userModel.userId,
-                        widget.item['like'],
-                      );
-                    });
-                  },
-                  icon: widget.item['like'].contains(userModel.userId)
-                      ? Icon(
-                          Icons.favorite,
-                          color: kPrimaryColor,
-                        )
-                      : const Icon(Iconsax.heart),
-                ),
-                Text(
-                  widget.item['like'].length.toString(),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CommentScreen(
-                          postId: widget.item['postId'],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: widget.item['postImage'] != " "
+                            ? Container(
+                                margin: const EdgeInsets.all(12),
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      widget.item['postImage'],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.item['description'],
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                          maxLines: 3,
                         ),
                       ),
-                    );
-                    getCommentCount();
-                  },
-                  icon: const Icon(Iconsax.message),
-                ),
-                Text(
-                  "$commentCount",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Iconsax.trash),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+                      const Gap(10),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            CloudMethods().likePost(
+                              widget.item['postId'],
+                              userModel.userId,
+                              widget.item['like'],
+                            );
+                          });
+                        },
+                        icon: widget.item['like'].contains(userModel.userId)
+                            ? Icon(
+                                Icons.favorite,
+                                color: kPrimaryColor,
+                              )
+                            : const Icon(Iconsax.heart),
+                      ),
+                      Text(
+                        widget.item['like'].length.toString(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommentScreen(
+                                postId: widget.item['postId'],
+                              ),
+                            ),
+                          );
+                          getCommentCount();
+                        },
+                        icon: const Icon(Iconsax.message),
+                      ),
+                      Text(
+                        "$commentCount",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          CloudMethods().deletePost(widget.item['postId']);
+                        },
+                        icon: const Icon(Iconsax.trash),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
   }
 }

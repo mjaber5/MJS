@@ -95,6 +95,30 @@ class CloudMethods {
     return response;
   }
 
+  followUser(String userId, String followUserId) async {
+    DocumentSnapshot documentSnapshot = await users.doc(userId).get();
+    List following = (documentSnapshot.data()! as dynamic)['following'];
+    try {
+      if (following.contains(followUserId)) {
+        await users.doc(userId).update({
+          'following': FieldValue.arrayRemove([followUserId]),
+        });
+        await users.doc(followUserId).update({
+          'followers': FieldValue.arrayRemove([userId]),
+        });
+      } else {
+        await users.doc(userId).update({
+          'following': FieldValue.arrayUnion([followUserId]),
+        });
+        await users.doc(followUserId).update({
+          'followers': FieldValue.arrayUnion([userId]),
+        });
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+  }
+
   editProfileData({
     required String userId,
     required String displayName,
@@ -117,6 +141,17 @@ class CloudMethods {
         });
         response = "success";
       }
+    } catch (e) {
+      log(e.toString());
+    }
+    return response;
+  }
+
+  deletePost(String postId) async {
+    String response = 'error ';
+    try {
+      posts.doc(postId).delete();
+      response = 'seccess';
     } catch (e) {
       log(e.toString());
     }

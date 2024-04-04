@@ -26,12 +26,13 @@ class StreamBuilderHomePost extends StatelessWidget {
             );
           }
           return ListView.builder(
-              itemCount: snapshot.data.docs.length,
-              itemBuilder: (context, index) {
-                dynamic data = snapshot.data!;
-                dynamic item = data.docs[index];
-                return PostCard(item: item);
-              });
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (context, index) {
+              dynamic data = snapshot.data!;
+              dynamic item = data.docs[index];
+              return PostCard(item: item);
+            },
+          );
         });
   }
 }

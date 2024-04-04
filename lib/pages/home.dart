@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'Share your moments...',
                   style: Theme.of(context).textTheme.titleLarge,
-                )
+                ),
               ],
             );
           }

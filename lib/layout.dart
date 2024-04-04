@@ -132,10 +132,10 @@ class _LayoutPageState extends State<LayoutPage> {
   PageView _buildLayoutPageView() {
     return PageView(
       controller: pageController,
-      children: const [
-        HomePage(),
-        AddPage(),
-        SearchPage(),
+      children: [
+        const HomePage(),
+        const AddPage(),
+        const SearchPage(),
         ProfilePage(),
       ],
       onPageChanged: (value) => setState(
