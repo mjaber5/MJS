@@ -63,7 +63,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = Provider.of<UserProvider>(context).userModel!;
+    UserModel? userModel = Provider.of<UserProvider>(context).userModel;
 
     String formattedDate =
         DateFormat('HH:MM').format(widget.item['date'].toDate());
@@ -182,12 +182,13 @@ class _PostCardState extends State<PostCard> {
                           setState(() {
                             CloudMethods().likePost(
                               widget.item['postId'],
-                              userModel.userId,
+                              userModel?.userId ?? '',
                               widget.item['like'],
                             );
                           });
                         },
-                        icon: widget.item['like'].contains(userModel.userId)
+                        icon: widget.item['like']
+                                .contains(userModel?.userId ?? '')
                             ? Icon(
                                 Icons.favorite,
                                 color: kPrimaryColor,

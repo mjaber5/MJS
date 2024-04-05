@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_stack/image_stack.dart';
 
-class ContainerFollowing extends StatelessWidget {
-  const ContainerFollowing({
+class FollowingCounter extends StatelessWidget {
+  const FollowingCounter({
     super.key,
+    required this.following,
     required this.context,
   });
 
+  final int following;
   final BuildContext context;
 
   @override
@@ -31,7 +33,7 @@ class ContainerFollowing extends StatelessWidget {
           Row(
             children: [
               Text(
-                '0',
+                following.toString(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               const Gap(5),

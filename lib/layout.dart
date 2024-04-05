@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,9 +11,10 @@ import 'package:social_media_project/pages/home.dart';
 import 'package:social_media_project/pages/profile.dart';
 import 'package:social_media_project/pages/search.dart';
 import 'package:social_media_project/provider/user_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LayoutPage extends StatefulWidget {
-  const LayoutPage({super.key});
+  const LayoutPage({Key? key}) : super(key: key);
 
   @override
   State<LayoutPage> createState() => _LayoutPageState();
@@ -22,10 +23,13 @@ class LayoutPage extends StatefulWidget {
 class _LayoutPageState extends State<LayoutPage> {
   int currentIndex = 0;
   PageController pageController = PageController();
+  late String myId;
+
   @override
   void initState() {
     super.initState();
     Provider.of<UserProvider>(context, listen: false).getDetails();
+    myId = FirebaseAuth.instance.currentUser!.uid;
   }
 
   @override
@@ -39,53 +43,49 @@ class _LayoutPageState extends State<LayoutPage> {
           Widget child,
         ) {
           final bool connected = connectivity != ConnectivityResult.none;
-          if (connected) {
-            return _buildLayoutPageView();
-          } else {
-            return _buildNoInternetWidget(context);
-          }
+          return connected ? _buildLayoutPageView() : _buildNoInternetWidget();
         },
-        child: Center(
-          child: _buildCircularProgressIndicator(),
-        ),
+        child: _buildCircularProgressIndicator(),
       ),
-      bottomNavigationBar: _buildNavigationBar(context),
+      bottomNavigationBar: _buildNavigationBar(),
     );
   }
 
-  CircularProgressIndicator _buildCircularProgressIndicator() {
-    return const CircularProgressIndicator();
+  Widget _buildCircularProgressIndicator() {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
   }
 
-  Column _buildNoInternetWidget(BuildContext context) {
+  Widget _buildNoInternetWidget() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-          child: SvgPicture.asset(
-            'assets/svg/no_enternet_connection.svg',
-            height: 150,
-            width: 150,
-          ),
+        SvgPicture.asset(
+          'assets/svg/no_enternet_connection.svg',
+          height: 150,
+          width: 150,
         ),
         const Gap(20),
         Text(
-          'No Connection ...',
-          style: Theme.of(context).textTheme.titleLarge,
-        )
+          'No Connection...',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ],
     );
   }
 
-  NavigationBar _buildNavigationBar(BuildContext context) {
+  NavigationBar _buildNavigationBar() {
     return NavigationBar(
       height: 70,
       backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 0,
-      onDestinationSelected: (value) => setState(() {
-        currentIndex = value;
-        pageController.jumpToPage(value);
-      }),
+      onDestinationSelected: (value) {
+        setState(() {
+          currentIndex = value;
+          pageController.jumpToPage(value);
+        });
+      },
       selectedIndex: currentIndex,
       indicatorColor: Colors.transparent,
       destinations: [
@@ -136,13 +136,15 @@ class _LayoutPageState extends State<LayoutPage> {
         const HomePage(),
         const AddPage(),
         const SearchPage(),
-        ProfilePage(),
+        ProfilePage(
+          userId: myId,
+        ),
       ],
-      onPageChanged: (value) => setState(
-        () {
+      onPageChanged: (value) {
+        setState(() {
           currentIndex = value;
-        },
-      ),
+        });
+      },
     );
   }
 }
