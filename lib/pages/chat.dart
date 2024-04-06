@@ -77,7 +77,7 @@ class _ChatPageState extends State<ChatPage> {
           );
         },
         child: const Icon(
-          Iconsax.message,
+          Iconsax.gemini,
           color: Colors.white,
         ),
       ),
