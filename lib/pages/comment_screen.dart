@@ -110,7 +110,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                           )
                                         : CircleAvatar(
                                             backgroundImage: NetworkImage(
-                                              userModel.profilePicture,
+                                              comment['profilePicture'],
                                             ),
                                           ),
                                     const Gap(10),

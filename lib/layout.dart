@@ -58,20 +58,22 @@ class _LayoutPageState extends State<LayoutPage> {
   }
 
   Widget _buildNoInternetWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(
-          'assets/svg/no_enternet_connection.svg',
-          height: 150,
-          width: 150,
-        ),
-        const Gap(20),
-        Text(
-          'No Connection...',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/no_enternet_connection.svg',
+            height: 150,
+            width: 150,
+          ),
+          const Gap(20),
+          Text(
+            'No Connection , please reconnect..',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
+      ),
     );
   }
 
@@ -141,9 +143,11 @@ class _LayoutPageState extends State<LayoutPage> {
         ),
       ],
       onPageChanged: (value) {
-        setState(() {
-          currentIndex = value;
-        });
+        setState(
+          () {
+            currentIndex = value;
+          },
+        );
       },
     );
   }
