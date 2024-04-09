@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/widget/chatwidgets/chat_bot_screen.dart';
+import 'package:social_media_project/widget/chatwidgets/chatsscreen/user_chat_screen.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -12,6 +13,19 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  void navigatChatsScreens(String userName, String profilePicture) {
+    setState(() {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatsScreen(
+              userName: userName,
+              profilePicture: profilePicture,
+            ),
+          ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,17 +60,25 @@ class _ChatPageState extends State<ChatPage> {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 dynamic item = snapshot.data!.docs[index];
-                return ListTile(
-                  leading: item['profilePicture'] != null &&
-                          item['profilePicture'].isNotEmpty
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(item['profilePicture']),
-                        )
-                      : const CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/man.png'),
-                        ),
-                  title: Text(item['displayName']),
-                  subtitle: Text('@ ${item['userName']}'),
+                return GestureDetector(
+                  onTap: () {
+                    navigatChatsScreens(item['userName'],
+                        item['profilePicture'] ?? 'assets/images/man.png');
+                  },
+                  child: ListTile(
+                    leading: item['profilePicture'] != null &&
+                            item['profilePicture'].isNotEmpty
+                        ? CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(item['profilePicture']),
+                          )
+                        : const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/man.png'),
+                          ),
+                    title: Text(item['displayName']),
+                    subtitle: Text('@ ${item['userName']}'),
+                  ),
                 );
               },
             );
@@ -76,9 +98,9 @@ class _ChatPageState extends State<ChatPage> {
             ),
           );
         },
-        child: const Icon(
-          Iconsax.gemini,
-          color: Colors.white,
+        child: Image.asset(
+          'assets/images/robot.png',
+          width: 35,
         ),
       ),
     );

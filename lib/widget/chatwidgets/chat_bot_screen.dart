@@ -100,9 +100,17 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'ChatBot',
-          style: Theme.of(context).textTheme.titleLarge,
+        title: Row(
+          children: [
+            const CircleAvatar(
+              backgroundImage: AssetImage('assets/images/robot_avatar.png'),
+            ),
+            const Gap(10),
+            Text(
+              'ChatBot',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
         ),
         leading: IconButton(
           icon: const Icon(Iconsax.arrow_left_2),
