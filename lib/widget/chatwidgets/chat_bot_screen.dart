@@ -1,29 +1,45 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+import 'package:retry/retry.dart';
+import 'package:social_media_project/provider/user_provider.dart';
 
 class ChatBotScreen extends StatefulWidget {
-  const ChatBotScreen({super.key});
+  const ChatBotScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatBotScreen> createState() => _ChatBotScreenState();
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  ChatUser myself = ChatUser(id: '1', firstName: 'mohammad');
+  late ChatUser myself;
   ChatUser bot = ChatUser(id: '2', firstName: 'Gemini');
   List<ChatMessage> allMessage = [];
   List<ChatUser> typing = [];
+  bool showAnimation = true;
 
-  final oururl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDpTDLbJA2Bptvw0dJTU8KNLYEzUg0raVM)';
+  final apiUrl =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDpTDLbJA2Bptvw0dJTU8KNLYEzUg0raVM';
 
   final header = {'Content-Type': 'application/json'};
-  getdata(ChatMessage m) async {
+
+  @override
+  void initState() {
+    super.initState();
+    final userModel =
+        Provider.of<UserProvider>(context, listen: false).userModel!;
+    myself = ChatUser(id: '1', firstName: userModel.userName);
+  }
+
+  Future<void> fetchData(ChatMessage m) async {
     typing.add(bot);
     allMessage.insert(0, m);
 
@@ -38,11 +54,25 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         }
       ]
     };
-    await http
-        .post(Uri.parse(oururl), headers: header, body: jsonEncode(data))
-        .then((value) {
-      if (value.statusCode == 200) {
-        var result = jsonDecode(value.body);
+
+    final client = http.Client();
+
+    try {
+      final response = await retry(
+        () async {
+          final request = http.Request('POST', Uri.parse(apiUrl));
+          request.headers.addAll(header);
+          request.body = jsonEncode(data);
+
+          final streamedResponse = await client.send(request);
+          return http.Response.fromStream(streamedResponse);
+        },
+        retryIf: (e) => e is SocketException,
+        maxAttempts: 3,
+      );
+
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
 
         ChatMessage m1 = ChatMessage(
           text: result['candidates'][0]['content']['parts'][0]['text'],
@@ -52,10 +82,16 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
         allMessage.insert(0, m1);
         setState(() {});
+      } else {
+        log(response.statusCode.toString());
       }
-    }).catchError((e) {});
-    typing.remove(bot);
-    setState(() {});
+    } catch (e) {
+      log('Error: $e');
+    } finally {
+      client.close();
+      typing.remove(bot);
+      setState(() {});
+    }
   }
 
   @override
@@ -63,7 +99,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: kPrimaryColor.withOpacity(0.4),
+        backgroundColor: Colors.transparent,
         title: Text(
           'ChatBot',
           style: Theme.of(context).textTheme.titleLarge,
@@ -75,13 +111,44 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           },
         ),
       ),
-      body: DashChat(
-          typingUsers: typing,
-          currentUser: myself,
-          onSend: (ChatMessage m) {
-            getdata(m);
-          },
-          messages: allMessage),
+      body: Stack(
+        children: [
+          DashChat(
+            messageOptions: MessageOptions(
+              currentUserContainerColor:
+                  Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
+              currentUserTextColor: Colors.white,
+            ),
+            typingUsers: typing,
+            currentUser: myself,
+            onSend: (ChatMessage m) {
+              fetchData(m);
+              setState(() {
+                showAnimation = false;
+              });
+            },
+            messages: allMessage,
+          ),
+          if (showAnimation)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/chat_bot.svg',
+                    height: 150,
+                    width: 150,
+                  ),
+                  const Gap(25),
+                  Text(
+                    'Try to ask any thing ... ',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              ),
+            )
+        ],
+      ),
     );
   }
 }

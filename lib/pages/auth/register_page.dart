@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
@@ -61,9 +62,17 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/MjsLogoEn.png',
+                SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: SizedBox(
+                      height: 180,
+                      child: SvgPicture.asset(
+                        'assets/svg/Mediamodifier-Design.svg',
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
+                    ),
                   ),
                 ),
                 Row(
