@@ -3,13 +3,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/pages/auth/register_page.dart';
 import 'package:social_media_project/services/auth.dart';
+import 'package:social_media_project/widget/authwidgets/app_logo.dart';
+import 'package:social_media_project/widget/authwidgets/app_name.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -57,38 +58,8 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: SizedBox(
-                      height: 180,
-                      child: SvgPicture.asset(
-                        'assets/svg/Mediamodifier-Design.svg',
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "02",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const Gap(10),
-                    Text(
-                      "MJS",
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
+                const AppLogo(),
+                AppName(context: context),
                 const Gap(20),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
@@ -150,56 +121,62 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const Gap(20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          signIn();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: kPrimaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30))),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: kWhiteColor),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                loginButton(),
                 const Gap(20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Dont have an account? ",
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const Gap(10),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()),
-                              (route) => false);
-                        },
-                        child: Text(
-                          "Regist now",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
-                        ))
-                  ],
-                )
+                textForAskingUser(context)
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row textForAskingUser(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Dont have an account? ",
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const Gap(10),
+        GestureDetector(
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  (route) => false);
+            },
+            child: Text(
+              "Regist now",
+              style: TextStyle(
+                color: kPrimaryColor,
+              ),
+            ))
+      ],
+    );
+  }
+
+  Row loginButton() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {
+              signIn();
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30))),
+            child: Text(
+              "Login",
+              style: TextStyle(fontWeight: FontWeight.bold, color: kWhiteColor),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

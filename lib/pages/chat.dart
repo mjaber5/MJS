@@ -13,7 +13,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  void navigatChatsScreens(String userName, String profilePicture) {
+  void navigatChatsScreens(
+      String userName, String profilePicture, String reciverUserId) {
     setState(() {
       Navigator.push(
           context,
@@ -21,6 +22,7 @@ class _ChatPageState extends State<ChatPage> {
             builder: (context) => ChatsScreen(
               userName: userName,
               profilePicture: profilePicture,
+              reciverUserId: reciverUserId,
             ),
           ));
     });
@@ -62,8 +64,11 @@ class _ChatPageState extends State<ChatPage> {
                 dynamic item = snapshot.data!.docs[index];
                 return GestureDetector(
                   onTap: () {
-                    navigatChatsScreens(item['userName'],
-                        item['profilePicture'] ?? 'assets/images/man.png');
+                    navigatChatsScreens(
+                      item['userName'],
+                      item['profilePicture'] ?? 'assets/images/man.png',
+                      item['userId'],
+                    );
                   },
                   child: ListTile(
                     leading: item['profilePicture'] != null &&
