@@ -43,6 +43,12 @@ class _ProfilePageState extends State<ProfilePage>
     getUserData();
   }
 
+  @override
+  void dispose() {
+    _tabController.dispose(); // Dispose the TabController
+    super.dispose();
+  }
+
   getUserData() async {
     try {
       var userData = await FirebaseFirestore.instance
@@ -54,9 +60,12 @@ class _ProfilePageState extends State<ProfilePage>
       isFollowing = (userData.data()! as dynamic)['followers'].contains(myId);
       followers = userData.data()!['followers'].length;
       following = userData.data()!['following'].length;
-      setState(() {
-        isLoad = false;
-      });
+      if (mounted) {
+        // Check if the widget is mounted before calling setState
+        setState(() {
+          isLoad = false;
+        });
+      }
     } on Exception catch (e) {
       log(e.toString());
     }
@@ -155,10 +164,14 @@ class _ProfilePageState extends State<ProfilePage>
                                       } on Exception catch (e) {
                                         log(e.toString());
                                       }
-                                      setState(() {
-                                        isFollowing ? followers-- : followers++;
-                                        isFollowing = !isFollowing;
-                                      });
+                                      if (mounted) {
+                                        setState(() {
+                                          isFollowing
+                                              ? followers--
+                                              : followers++;
+                                          isFollowing = !isFollowing;
+                                        });
+                                      }
                                     },
                                     style: ButtonStyle(
                                       elevation: MaterialStateProperty.all(0),
