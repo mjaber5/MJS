@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_project/widget/searchwidgets/futurebuilder.dart';
+import 'package:social_media_project/widget/searchwidgets/futurebuilder_search.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

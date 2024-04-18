@@ -28,9 +28,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
-  late TabController _tabController = TabController(length: 2, vsync: this);
+  late TabController _tabController;
   String myId = FirebaseAuth.instance.currentUser!.uid;
-  var userDataInfo = {};
+  Map<String, dynamic> userDataInfo = {};
   bool isLoad = true;
   bool isFollowing = false;
   int followers = 0;
@@ -38,14 +38,15 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void initState() {
-    widget.userId = widget.userId ?? FirebaseAuth.instance.currentUser!.uid;
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    widget.userId = widget.userId ?? FirebaseAuth.instance.currentUser!.uid;
     getUserData();
   }
 
   @override
   void dispose() {
-    _tabController.dispose(); // Dispose the TabController
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -61,7 +62,6 @@ class _ProfilePageState extends State<ProfilePage>
       followers = userData.data()!['followers'].length;
       following = userData.data()!['following'].length;
       if (mounted) {
-        // Check if the widget is mounted before calling setState
         setState(() {
           isLoad = false;
         });
