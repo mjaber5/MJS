@@ -28,7 +28,7 @@ final ColorScheme colorScheme = ColorScheme.fromSeed(
 );
 final ColorScheme darkColorScheme = ColorScheme.fromSeed(
   seedColor: kPrimaryColor,
-  background: const Color.fromARGB(255, 0, 0, 0),
+  background: const Color.fromARGB(255, 13, 13, 13),
   brightness: Brightness.dark,
 );
 
