@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'package:social_media_project/pages/edit_user_info.dart';
+import 'package:social_media_project/screens/edit_user_info.dart';
 import 'package:social_media_project/services/cloud.dart';
 import 'package:social_media_project/widget/profilewidgets/followers.dart';
 import 'package:social_media_project/widget/profilewidgets/following.dart';

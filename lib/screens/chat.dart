@@ -211,7 +211,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _searchBarWidget(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(12.0),
       child: SearchBar(
         controller: searchController,
         onChanged: (value) {
@@ -236,7 +236,7 @@ class _ChatPageState extends State<ChatPage> {
         elevation: MaterialStateProperty.all(0),
         shape: MaterialStateProperty.resolveWith(
           (states) => RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(22),
           ),
         ),
       ),
