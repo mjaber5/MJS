@@ -7,7 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/layout.dart';
-import 'package:social_media_project/pages/auth/register_page.dart';
+import 'package:social_media_project/screens/auth/register_page.dart';
 import 'package:social_media_project/services/auth.dart';
 import 'package:social_media_project/widget/authwidgets/app_logo.dart';
 import 'package:social_media_project/widget/authwidgets/app_name.dart';

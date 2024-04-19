@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
-import 'package:social_media_project/pages/comment_screen.dart';
+import 'package:social_media_project/screens/comment_screen.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
 

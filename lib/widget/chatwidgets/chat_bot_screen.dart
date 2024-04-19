@@ -149,7 +149,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                   ),
                   const Gap(25),
                   Text(
-                    'Try to ask any thing ... ',
+                    'Try to ask anything ... ',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],

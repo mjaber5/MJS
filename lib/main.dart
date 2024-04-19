@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/layout.dart';
-import 'package:social_media_project/pages/auth/login_page.dart';
+import 'package:social_media_project/screens/auth/login_page.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'firebase_options.dart';
 
