@@ -8,15 +8,17 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: Center(
-        child: SizedBox(
-          height: 180,
-          child: SvgPicture.asset(
-            'assets/svg/Mediamodifier-Design.svg',
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
+    return Center(
+      child: SizedBox(
+        height: 300,
+        child: Center(
+          child: SizedBox(
+            height: 400,
+            child: SvgPicture.asset(
+              'assets/svg/Mediamodifier-Design.svg',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
           ),
         ),
       ),

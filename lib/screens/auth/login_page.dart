@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/components/constant/string.dart';
 import 'package:social_media_project/layout.dart';
 import 'package:social_media_project/screens/auth/register_page.dart';
 import 'package:social_media_project/services/auth.dart';
@@ -20,8 +21,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController emailCon = TextEditingController();
-  TextEditingController passwordCon = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isPass = true;
   bool obscurePassword = true;
   String showPassword = 'Show';
@@ -29,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
   signIn() async {
     try {
       String response = await AuthMethod().signIn(
-        email: emailCon.text,
-        password: passwordCon.text,
+        email: emailController.text,
+        password: passwordController.text,
       );
       if (response == 'success') {
         Navigator.pushAndRemoveUntil(
@@ -61,65 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                 const AppLogo(),
                 AppName(context: context),
                 const Gap(20),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: emailCon,
-                  decoration: InputDecoration(
-                      fillColor: kWhiteColor,
-                      filled: true,
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      hintText: "Email",
-                      hintStyle: Theme.of(context).textTheme.titleSmall,
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(30)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: kPrimaryColor),
-                        borderRadius: BorderRadius.circular(30),
-                      )),
-                ),
+                textFormFieldEmailSigninScreen(context),
                 const Gap(20),
-                TextField(
-                  controller: passwordCon,
-                  obscureText: obscurePassword,
-                  decoration: InputDecoration(
-                    fillColor: kWhiteColor,
-                    filled: true,
-                    prefixIcon: Icon(
-                      LineIcons.key,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    hintText: "Password",
-                    hintStyle: Theme.of(context).textTheme.titleSmall,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: kPrimaryColor),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    suffixIcon: TextButton(
-                      child: Text(
-                        showPassword,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                          if (obscurePassword) {
-                            showPassword = 'show';
-                          } else {
-                            showPassword = 'hide';
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ),
+                textFormFieldPasswordSigninScreen(context),
                 const Gap(20),
                 loginButton(),
                 const Gap(20),
@@ -127,6 +72,87 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  TextFormField textFormFieldPasswordSigninScreen(BuildContext context) {
+    return TextFormField(
+      validator: (val) {
+        if (val!.isEmpty) {
+          return 'Please fill in this field';
+        } else if (!passwordRexExp.hasMatch(val)) {
+          return 'Please enter a valid password';
+        }
+        return null;
+      },
+      controller: passwordController,
+      obscureText: obscurePassword,
+      decoration: InputDecoration(
+        fillColor: kWhiteColor,
+        filled: true,
+        prefixIcon: Icon(
+          LineIcons.key,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        hintText: "Password",
+        hintStyle: Theme.of(context).textTheme.titleSmall,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        suffixIcon: TextButton(
+          child: Text(
+            showPassword,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          onPressed: () {
+            setState(() {
+              obscurePassword = !obscurePassword;
+              if (obscurePassword) {
+                showPassword = 'show';
+              } else {
+                showPassword = 'hide';
+              }
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  TextFormField textFormFieldEmailSigninScreen(BuildContext context) {
+    return TextFormField(
+      validator: (val) {
+        if (val!.isEmpty) {
+          return 'Please fill in this field';
+        } else if (!emailRexExp.hasMatch(val)) {
+          return 'Please enter a valid email';
+        }
+        return null;
+      },
+      keyboardType: TextInputType.emailAddress,
+      controller: emailController,
+      decoration: InputDecoration(
+        fillColor: kWhiteColor,
+        filled: true,
+        prefixIcon: Icon(
+          Icons.email_outlined,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        hintText: "Email",
+        hintStyle: Theme.of(context).textTheme.titleSmall,
+        border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(30)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
     );
@@ -167,12 +193,17 @@ class _LoginPageState extends State<LoginPage> {
               signIn();
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30))),
+              backgroundColor: kPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
             child: Text(
               "Login",
-              style: TextStyle(fontWeight: FontWeight.bold, color: kWhiteColor),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: kWhiteColor,
+              ),
             ),
           ),
         )

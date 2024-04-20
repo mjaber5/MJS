@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:social_media_project/screens/chat.dart';
+import 'package:social_media_project/widget/authwidgets/app_name.dart';
 import 'package:social_media_project/widget/homewidgets/homewidgetpost.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -34,13 +35,8 @@ class _HomePageState extends State<HomePage> {
           )
         ],
         backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: Image.asset(
-          'assets/images/MjsLogoEn.png',
-          height: 185,
-          width: 185,
-        ),
-        toolbarHeight: 70,
+        centerTitle: false,
+        title: AppName(context: context),
       ),
       body: StreamBuilder(
         stream: posts.snapshots(),
@@ -50,7 +46,6 @@ class _HomePageState extends State<HomePage> {
               child: Text("Error: ${snapshot.error}"),
             );
           }
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),

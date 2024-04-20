@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_element
 
 import 'dart:developer';
 
@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_project/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/screens/comment_screen.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
+import 'package:social_media_project/widget/post_card_widgets/menu_items.dart';
 
 class PostCard extends StatefulWidget {
   final item;
@@ -28,7 +30,8 @@ class _PostCardState extends State<PostCard> {
   bool isLoad = true;
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getAuthorStream(
-      String userId) {
+    String userId,
+  ) {
     isLoad = false;
     return FirebaseFirestore.instance
         .collection('users')
@@ -61,12 +64,51 @@ class _PostCardState extends State<PostCard> {
     getCommentCount();
   }
 
+  void _editPostDescription(
+      BuildContext context, String currentDescription, String postId) {
+    TextEditingController descriptionController =
+        TextEditingController(text: currentDescription);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Description'),
+        content: TextField(
+          controller: descriptionController,
+          decoration: const InputDecoration(hintText: "Enter new description"),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              _updatePostDescription(postId, descriptionController.text);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _updatePostDescription(String postId, String newDescription) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .update({'description': newDescription})
+        .then((value) => log("Description Updated"))
+        .catchError((error) => log("Failed to update description: $error"));
+  }
+
   @override
   Widget build(BuildContext context) {
     UserModel? userModel = Provider.of<UserProvider>(context).userModel;
 
     String formattedDate =
-        DateFormat('HH:MM').format(widget.item['date'].toDate());
+        DateFormat('EEE HH:mm').format(widget.item['date'].toDate());
 
     return isLoad
         ? const Center(
@@ -107,7 +149,8 @@ class _PostCardState extends State<PostCard> {
                                 CircleAvatar(
                                   backgroundImage: authorProfilePic.isEmpty
                                       ? const AssetImage(
-                                          'assets/images/man.png')
+                                          'assets/images/man.png',
+                                        )
                                       : NetworkImage(authorProfilePic)
                                           as ImageProvider<Object>,
                                 ),
@@ -138,6 +181,24 @@ class _PostCardState extends State<PostCard> {
                       Text(
                         '$formattedDate\th',
                         style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showPopover(
+                            context: context,
+                            bodyBuilder: (context) => MenuItems(
+                              item: widget.item,
+                            ),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
+                            width: 200,
+                            height: 166,
+                            direction: PopoverDirection.top,
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.more_vert,
+                        ),
                       ),
                     ],
                   ),
