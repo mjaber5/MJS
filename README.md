@@ -1,17 +1,24 @@
-# social_media_project
+Social Media Project
+This Social Media Project is a fully-featured social networking mobile application designed to connect users and enable them to share thoughts, images, and updates in real-time. Built with Flutter, this app offers a robust, scalable, and smooth user experience across both iOS and Android platforms.
 
-A new Flutter project.
+Features
+- User Authentication: Secure login and registration system with validation.
+- Personal Profiles: Customizable user profiles with profile pictures and user information.
+- Posts: Users can create, edit, and delete posts.
+- Real-Time Interactions: Like, comment, and share posts in real-time.
+- Notifications: Alerts for various user interactions like likes, comments, and new followers.
+- Search and Follow: Search for users and follow/unfollow functionality.
+- Responsive Layout: Adaptive UI for different screen sizes and orientations.
+  
+Technologies Used
 
-## Getting Started
+- Flutter: A UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+- Dart: The programming language used for Flutter development.
+- Firebase: Backend services like authentication, database (Firestore), and hosting.
+- Provider: State management solution to manage the data flow in the app.
 
-This project is a starting point for a Flutter application.
+Contact
+Mohammed Jaber - @mohhjaber._ - mhammdjbr555@gmail.com
+Mohammed AbuShera - @moh_md_7_ - mohammadabushera77@gmail.com
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-this node
+Project Link: https://github.com/mjaber5/MJS.git
