@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -13,45 +15,65 @@ import 'package:social_media_project/widget/authwidgets/app_name.dart';
 import 'package:social_media_project/widget/authwidgets/password_check.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController displayController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  bool obscurePassword = true;
-  bool isPass = true;
-  String showPassword = 'show';
-  bool containsUpperCase = false;
-  bool containsLowerCase = false;
-  bool containsNumber = false;
-  bool containsSpecialChar = false;
-  bool contains8Length = false;
-  register() async {
-    try {
-      String response = AuthMethod().signUp(
-        email: emailController.text,
-        password: passwordController.text,
-        userName: usernameController.text,
-        displayName: displayController.text,
-      );
-      if (response == 'success') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LayoutPage(),
-          ),
+  final TextEditingController _displayController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  String _showPassword = 'show';
+  bool _containsUpperCase = false;
+  bool _containsLowerCase = false;
+  bool _containsNumber = false;
+  bool _containsSpecialChar = false;
+  bool _contains8Length = false;
+  final _formKey = GlobalKey<FormState>();
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+      _showPassword = _obscurePassword ? 'show' : 'hide';
+    });
+  }
+
+  void _onPasswordChanged(String value) {
+    setState(() {
+      _containsUpperCase = value.contains(RegExp(r'[A-Z]'));
+      _containsLowerCase = value.contains(RegExp(r'[a-z]'));
+      _containsNumber = value.contains(RegExp(r'[0-9]'));
+      _containsSpecialChar = value.contains(specialCharRexExp);
+      _contains8Length = value.length >= 8;
+    });
+  }
+
+  Future<void> _register() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        final String response = await AuthMethod().signUp(
+          email: _emailController.text,
+          password: _passwordController.text,
+          userName: _usernameController.text,
+          displayName: _displayController.text,
         );
-      } else {
-        log(response);
+        if (response == 'success') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LayoutPage(),
+            ),
+          );
+        } else {
+          log(response);
+        }
+      } catch (e) {
+        log(e.toString());
       }
-    } catch (e) {
-      log(e.toString());
     }
   }
 
@@ -62,56 +84,77 @@ class _RegisterPageState extends State<RegisterPage> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                const AppLogo(),
-                AppName(context: context),
-                const Gap(10),
-                _buildTextFormFieldRegisterPage(
-                  context: context,
-                  controller: displayController,
-                  hintText: 'Display Name',
-                  prefixIcon: Icon(
-                    LineIcons.user,
-                    color: Theme.of(context).colorScheme.primary,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const AppLogo(),
+                  AppName(context: context),
+                  const Gap(10),
+                  _buildTextFormField(
+                    context: context,
+                    controller: _displayController,
+                    hintText: 'Display Name',
+                    prefixIcon: Icon(
+                      LineIcons.user,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your display name';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const Gap(20),
-                _buildTextFormFieldRegisterPage(
-                  context: context,
-                  controller: usernameController,
-                  hintText: 'User Name',
-                  prefixIcon: Icon(
-                    LineIcons.at,
-                    color: Theme.of(context).colorScheme.primary,
+                  const Gap(20),
+                  _buildTextFormField(
+                    context: context,
+                    controller: _usernameController,
+                    hintText: 'User Name',
+                    prefixIcon: Icon(
+                      LineIcons.at,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your user name';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const Gap(20),
-                _buildTextFormFieldRegisterPage(
-                  context: context,
-                  controller: emailController,
-                  hintText: 'Email',
-                  prefixIcon: Icon(
-                    Icons.email_outlined,
-                    color: Theme.of(context).colorScheme.primary,
+                  const Gap(20),
+                  _buildTextFormField(
+                    context: context,
+                    controller: _emailController,
+                    hintText: 'Email',
+                    prefixIcon: Icon(
+                      Icons.email_outlined,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const Gap(20),
-                passwordTextFieldRegisterPage(context),
-                const SizedBox(height: 10),
-                PasswordStrongerCheck(
-                  containsUpperCase: containsUpperCase,
-                  containsLowerCase: containsLowerCase,
-                  containsNumber: containsNumber,
-                  containsSpecialChar: containsSpecialChar,
-                  contains8Length: contains8Length,
-                  context: context,
-                ),
-                const Gap(20),
-                registerButton(),
-                const Gap(20),
-                textForAskingUser(context),
-              ],
+                  const Gap(20),
+                  _buildPasswordTextField(context),
+                  const SizedBox(height: 10),
+                  PasswordStrongerCheck(
+                    containsUpperCase: _containsUpperCase,
+                    containsLowerCase: _containsLowerCase,
+                    containsNumber: _containsNumber,
+                    containsSpecialChar: _containsSpecialChar,
+                    contains8Length: _contains8Length,
+                    context: context,
+                  ),
+                  const Gap(20),
+                  _buildRegisterButton(),
+                  const Gap(20),
+                  _buildTextForAskingUser(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -119,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Row textForAskingUser(BuildContext context) {
+  Widget _buildTextForAskingUser(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -131,9 +174,10 @@ class _RegisterPageState extends State<RegisterPage> {
         GestureDetector(
           onTap: () {
             Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                (route) => false);
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+              (route) => false,
+            );
           },
           child: Text(
             "Login now",
@@ -146,18 +190,18 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Row registerButton() {
+  Widget _buildRegisterButton() {
     return Row(
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: () {
-              register();
-            },
+            onPressed: _register,
             style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30))),
+              backgroundColor: kPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
             child: Text(
               "Register",
               style: TextStyle(
@@ -166,15 +210,15 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
-  TextFormField passwordTextFieldRegisterPage(BuildContext context) {
+  Widget _buildPasswordTextField(BuildContext context) {
     return TextFormField(
-      controller: passwordController,
-      obscureText: obscurePassword,
+      controller: _passwordController,
+      obscureText: _obscurePassword,
       decoration: InputDecoration(
         fillColor: kWhiteColor,
         filled: true,
@@ -193,102 +237,51 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(30),
         ),
         suffixIcon: TextButton(
+          onPressed: _togglePasswordVisibility,
           child: Text(
-            showPassword,
+            _showPassword,
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          onPressed: () {
-            setState(() {
-              obscurePassword = !obscurePassword;
-              if (obscurePassword) {
-                showPassword = 'show';
-              } else {
-                showPassword = 'hide';
-              }
-            });
-          },
         ),
       ),
-      onChanged: (val) {
-        if (val.contains(RegExp(r'[A-Z]'))) {
-          setState(() {
-            containsUpperCase = true;
-          });
-        } else {
-          setState(() {
-            containsUpperCase = false;
-          });
-        }
-        if (val.contains(RegExp(r'[a-z]'))) {
-          setState(() {
-            containsLowerCase = true;
-          });
-        } else {
-          setState(() {
-            containsLowerCase = false;
-          });
-        }
-        if (val.contains(RegExp(r'[0-9]'))) {
-          setState(() {
-            containsNumber = true;
-          });
-        } else {
-          setState(() {
-            containsNumber = false;
-          });
-        }
-        if (val.contains(specialCharRexExp)) {
-          setState(() {
-            containsSpecialChar = true;
-          });
-        } else {
-          setState(() {
-            containsSpecialChar = false;
-          });
-        }
-        if (val.length >= 8) {
-          setState(() {
-            contains8Length = true;
-          });
-        } else {
-          setState(() {
-            contains8Length = false;
-          });
-        }
-      },
-      validator: (val) {
-        if (val!.isEmpty) {
-          return 'Please fill in this field';
-        } else if (!passwordRexExp.hasMatch(val)) {
+      onChanged: _onPasswordChanged,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter your password';
+        } else if (!passwordRexExp.hasMatch(value)) {
           return 'Please enter a valid password';
         }
         return null;
       },
     );
   }
-}
 
-Widget _buildTextFormFieldRegisterPage({
-  required BuildContext context,
-  required TextEditingController controller,
-  required String hintText,
-  required Icon prefixIcon,
-}) {
-  return TextFormField(
-    controller: controller,
-    style: Theme.of(context).textTheme.titleMedium,
-    decoration: InputDecoration(
-      fillColor: kWhiteColor,
-      filled: true,
-      prefixIcon: prefixIcon,
-      hintText: hintText,
-      hintStyle: Theme.of(context).textTheme.titleSmall,
-      border: OutlineInputBorder(
-          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(30)),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: kPrimaryColor),
-        borderRadius: BorderRadius.circular(30),
+  Widget _buildTextFormField({
+    required BuildContext context,
+    required TextEditingController controller,
+    required String hintText,
+    required Icon prefixIcon,
+    required String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      style: Theme.of(context).textTheme.titleMedium,
+      decoration: InputDecoration(
+        fillColor: kWhiteColor,
+        filled: true,
+        prefixIcon: prefixIcon,
+        hintText: hintText,
+        hintStyle: Theme.of(context).textTheme.titleSmall,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
-    ),
-  );
+      validator: validator,
+    );
+  }
 }

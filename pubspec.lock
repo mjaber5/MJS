@@ -768,6 +768,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.8.0"
+  popover:
+    dependency: "direct main"
+    description:
+      name: popover
+      sha256: ca3bef9d88ebf5c5c3823946a5de3ce8360018fbb6a3e25819586a7d5a203db2
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.0"
   provider:
     dependency: "direct main"
     description:

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
 
 class AppName extends StatelessWidget {
   const AppName({
@@ -21,10 +20,10 @@ class AppName extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const Gap(10),
-        Text(
+        const Text(
           "MJS",
           style: TextStyle(
-            color: kPrimaryColor,
+            color: Color.fromARGB(255, 255, 17, 0),
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
