@@ -1,4 +1,5 @@
 Social Media Project
+
 This Social Media Project is a fully-featured social networking mobile application designed to connect users and enable them to share thoughts, images, and updates in real-time. Built with Flutter, this app offers a robust, scalable, and smooth user experience across both iOS and Android platforms.
 
 Features
@@ -19,6 +20,7 @@ Technologies Used
 
 Contact
 Mohammed Jaber - @mohhjaber._ - mhammdjbr555@gmail.com
+
 Mohammed AbuShera - @moh_md_7_ - mohammadabushera77@gmail.com
 
 Project Link: https://github.com/mjaber5/MJS.git
