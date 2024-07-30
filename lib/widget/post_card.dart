@@ -9,7 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/screens/comment_screen.dart';
 import 'package:social_media_project/provider/user_provider.dart';
@@ -190,7 +190,7 @@ class _PostCardState extends State<PostCard> {
                               item: widget.item,
                             ),
                             backgroundColor:
-                                Theme.of(context).colorScheme.background,
+                                Theme.of(context).colorScheme.surface,
                             width: 200,
                             height: 166,
                             direction: PopoverDirection.top,

@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
@@ -122,7 +122,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 labelText: 'Display name',
                 prefixIcon: Icon(
                   Ionicons.person_outline,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const Gap(20),
@@ -132,7 +132,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 labelText: 'Username',
                 prefixIcon: Icon(
                   Ionicons.at,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const Gap(20),
@@ -142,7 +142,7 @@ class _EditUserPageState extends State<EditUserPage> {
                 labelText: 'Bio',
                 prefixIcon: Icon(
                   Ionicons.information_circle_outline,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const Gap(30),

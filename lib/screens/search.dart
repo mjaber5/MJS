@@ -69,16 +69,16 @@ class _SearchPageState extends State<SearchPage> {
         size: 20,
       ),
       hintText: 'Search',
-      hintStyle: MaterialStateProperty.all(
+      hintStyle: WidgetStateProperty.all(
         const TextStyle(
           fontSize: 18,
         ),
       ),
-      backgroundColor: MaterialStateColor.resolveWith(
-        (states) => Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+      backgroundColor: WidgetStateColor.resolveWith(
+        (states) => Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
       ),
-      elevation: MaterialStateProperty.all(0),
-      shape: MaterialStateProperty.resolveWith(
+      elevation: WidgetStateProperty.all(0),
+      shape: WidgetStateProperty.resolveWith(
         (states) => RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),

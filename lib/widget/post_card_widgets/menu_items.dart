@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/services/cloud.dart';
 
 class MenuItems extends StatelessWidget {

@@ -10,6 +10,7 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:social_media_project/screens/edit_user_info.dart';
 import 'package:social_media_project/services/cloud.dart';
+import 'package:social_media_project/widget/chatwidgets/chatsscreen/user_chat_screen.dart';
 import 'package:social_media_project/widget/profilewidgets/followers.dart';
 import 'package:social_media_project/widget/profilewidgets/following.dart';
 import 'package:social_media_project/widget/profilewidgets/photos_tab.dart';
@@ -174,12 +175,12 @@ class _ProfilePageState extends State<ProfilePage>
                                       }
                                     },
                                     style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
+                                      elevation: WidgetStateProperty.all(0),
                                       backgroundColor:
-                                          MaterialStateColor.resolveWith(
+                                          WidgetStateColor.resolveWith(
                                         (states) => Theme.of(context)
                                             .colorScheme
-                                            .onBackground
+                                            .onSurface
                                             .withOpacity(0.1),
                                       ),
                                     ),
@@ -196,14 +197,26 @@ class _ProfilePageState extends State<ProfilePage>
                                   ),
                                   const Gap(5),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatsScreen(
+                                            userName: userDataInfo['userName'],
+                                            profilePicture:
+                                                userDataInfo['profilePicture'],
+                                            reciverUserId:
+                                                userDataInfo['userId'],
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
+                                      elevation: WidgetStateProperty.all(0),
                                       backgroundColor:
-                                          MaterialStateColor.resolveWith(
+                                          WidgetStateColor.resolveWith(
                                         (states) => Theme.of(context)
                                             .colorScheme
-                                            .onBackground
+                                            .onSurface
                                             .withOpacity(0.1),
                                       ),
                                     ),
@@ -212,7 +225,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       size: 20,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .onBackground,
+                                          .onSurface,
                                     ),
                                   ),
                                 ],
@@ -230,7 +243,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   decoration: BoxDecoration(
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .onBackground
+                                        .onSurface
                                         .withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
 
 class PasswordStrongerCheck extends StatelessWidget {
   const PasswordStrongerCheck({
@@ -32,22 +31,22 @@ class PasswordStrongerCheck extends StatelessWidget {
               "⚈  1 uppercase",
               style: TextStyle(
                   color: containsUpperCase
-                      ? kSecondaryColor
-                      : Theme.of(context).colorScheme.onBackground),
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onSurface),
             ),
             Text(
               "⚈  1 lowercase",
               style: TextStyle(
                   color: containsLowerCase
-                      ? kSecondaryColor
-                      : Theme.of(context).colorScheme.onBackground),
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onSurface),
             ),
             Text(
               "⚈  1 number",
               style: TextStyle(
                   color: containsNumber
-                      ? kSecondaryColor
-                      : Theme.of(context).colorScheme.onBackground),
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onSurface),
             ),
           ],
         ),
@@ -58,15 +57,15 @@ class PasswordStrongerCheck extends StatelessWidget {
               "⚈  1 special character",
               style: TextStyle(
                   color: containsSpecialChar
-                      ? kSecondaryColor
-                      : Theme.of(context).colorScheme.onBackground),
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onSurface),
             ),
             Text(
               "⚈  8 minimum character",
               style: TextStyle(
                   color: contains8Length
-                      ? kSecondaryColor
-                      : Theme.of(context).colorScheme.onBackground),
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onSurface),
             ),
           ],
         ),

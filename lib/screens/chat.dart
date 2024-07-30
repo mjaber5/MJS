@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/widget/chatwidgets/chat_bot_screen.dart';
 import 'package:social_media_project/widget/chatwidgets/chatsscreen/user_chat_screen.dart';
 import 'package:social_media_project/widget/searchwidgets/futurebuilder_search.dart';
@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
   void showUserDetailsBottomSheet(
       String userName, String profilePicture, String userId) {
     showModalBottomSheet(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       context: context,
       builder: (context) {
         return Container(
@@ -82,8 +82,8 @@ class _ChatPageState extends State<ChatPage> {
         msg: 'User deleted successfully',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        textColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        textColor: Theme.of(context).colorScheme.onSurface,
       );
     } catch (e) {
       log(e.toString());
@@ -91,8 +91,8 @@ class _ChatPageState extends State<ChatPage> {
         msg: 'Error deleting user: ${e.toString()}',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        textColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        textColor: Theme.of(context).colorScheme.onSurface,
       );
     }
   }
@@ -224,17 +224,16 @@ class _ChatPageState extends State<ChatPage> {
           size: 20,
         ),
         hintText: 'Search',
-        hintStyle: MaterialStateProperty.all(
+        hintStyle: WidgetStateProperty.all(
           const TextStyle(
             fontSize: 18,
           ),
         ),
-        backgroundColor: MaterialStateColor.resolveWith(
-          (states) =>
-              Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+        backgroundColor: WidgetStateColor.resolveWith(
+          (states) => Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
         ),
-        elevation: MaterialStateProperty.all(0),
-        shape: MaterialStateProperty.resolveWith(
+        elevation: WidgetStateProperty.all(0),
+        shape: WidgetStateProperty.resolveWith(
           (states) => RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(22),
           ),

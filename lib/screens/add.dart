@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
@@ -126,16 +126,16 @@ class _AddPageState extends State<AddPage> {
       style: Theme.of(context).textTheme.titleMedium,
       controller: descriptionController,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).colorScheme.background,
+        fillColor: Theme.of(context).colorScheme.surface,
         labelText: 'description',
         labelStyle: TextStyle(
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
         filled: true,
         prefixIcon: Icon(
           Ionicons.pencil,
           size: 22,
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
         suffixIcon: IconButton(
           onPressed: () async {
@@ -146,7 +146,7 @@ class _AddPageState extends State<AddPage> {
           },
           icon: Icon(
             Icons.attach_file,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         border: OutlineInputBorder(
@@ -155,7 +155,7 @@ class _AddPageState extends State<AddPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
           borderRadius: BorderRadius.circular(30),
         ),

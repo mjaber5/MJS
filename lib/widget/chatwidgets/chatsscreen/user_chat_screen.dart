@@ -227,7 +227,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               decoration: InputDecoration(
                 hintText: 'Type message..',
                 fillColor:
-                    Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+                    Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                 filled: true,
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,

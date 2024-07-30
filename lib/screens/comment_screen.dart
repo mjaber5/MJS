@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_project/components/colors/app_color.dart';
+import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/models/user.dart';
 import 'package:social_media_project/provider/user_provider.dart';
 import 'package:social_media_project/services/cloud.dart';
@@ -146,7 +146,7 @@ class _CommentScreenState extends State<CommentScreen> {
                     decoration: BoxDecoration(
                       color: Theme.of(context)
                           .colorScheme
-                          .onBackground
+                          .onSurface
                           .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -164,8 +164,8 @@ class _CommentScreenState extends State<CommentScreen> {
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
-                    elevation: MaterialStateProperty.all(0),
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    elevation: WidgetStateProperty.all(0),
+                    backgroundColor: WidgetStateProperty.all<Color>(
                       Colors.transparent,
                     ),
                   ),

@@ -22,10 +22,10 @@ class editProfileTextField extends StatelessWidget {
       controller: controller,
       style: Theme.of(context).textTheme.titleMedium,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+        fillColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
         labelText: labelText,
         labelStyle: TextStyle(
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Theme.of(context).colorScheme.onSurface,
         ),
         filled: true,
         prefixIcon: prefixIcon,
@@ -35,7 +35,7 @@ class editProfileTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
           borderRadius: BorderRadius.circular(30),
         ),

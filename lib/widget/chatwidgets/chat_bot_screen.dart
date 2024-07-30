@@ -27,7 +27,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   bool showAnimation = true;
 
   final apiUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyDpTDLbJA2Bptvw0dJTU8KNLYEzUg0raVM';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyD9gF0_eteKQK3BqsBTHswu3YTrTXDlGPs';
 
   final header = {'Content-Type': 'application/json'};
 
@@ -124,7 +124,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           DashChat(
             messageOptions: MessageOptions(
               currentUserContainerColor:
-                  Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
               currentUserTextColor: Colors.white,
             ),
             typingUsers: typing,
