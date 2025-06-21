@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:social_media_project/utils/components/colors/app_color.dart';
 import 'package:social_media_project/services/cloud.dart';
 
@@ -63,14 +62,14 @@ class MenuItems extends StatelessWidget {
   }
 
   void _showToast(String message, Color backgroundColor) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: backgroundColor,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    // Fluttertoast.showToast(
+    //   msg: message,
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.BOTTOM,
+    //   backgroundColor: backgroundColor,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
   }
 
   @override

@@ -13,7 +13,7 @@ import firebase_core
 import firebase_storage
 import network_info_plus
 import path_provider_foundation
-import sqflite
+import sqflite_darwin
 import url_launcher_macos
 import video_player_avfoundation
 

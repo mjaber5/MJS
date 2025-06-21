@@ -54,7 +54,6 @@ dependencies:
   http: ^1.2.1
   retry: ^3.1.2
   lottie: ^3.1.0
-  fluttertoast: ^8.2.4
   popover: ^0.3.0
 
 dev_dependencies:

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
@@ -78,22 +77,22 @@ class _ChatPageState extends State<ChatPage> {
   void deleteUserChat(String userId) {
     try {
       FirebaseFirestore.instance.collection('chat_room').doc(userId).delete();
-      Fluttertoast.showToast(
-        msg: 'User deleted successfully',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        textColor: Theme.of(context).colorScheme.onSurface,
-      );
+      // Fluttertoast.showToast(
+      //   msg: 'User deleted successfully',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   backgroundColor: Theme.of(context).colorScheme.surface,
+      //   textColor: Theme.of(context).colorScheme.onSurface,
+      // );
     } catch (e) {
       log(e.toString());
-      Fluttertoast.showToast(
-        msg: 'Error deleting user: ${e.toString()}',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        textColor: Theme.of(context).colorScheme.onSurface,
-      );
+      // Fluttertoast.showToast(
+      //   msg: 'Error deleting user: ${e.toString()}',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   backgroundColor: Theme.of(context).colorScheme.surface,
+      //   textColor: Theme.of(context).colorScheme.onSurface,
+      // );
     }
   }
 
